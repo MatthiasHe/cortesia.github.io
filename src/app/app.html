@@ -554,7 +554,10 @@
         <h3 class="font-serif text-2xl font-medium text-background mb-8">
           Demande de devis
         </h3>
-        <form class="space-y-6">
+        <form action="https://api.web3forms.com/submit" method="POST" class="space-y-6">
+          <input type="hidden" name="access_key" value="9e5b73fa-6f11-4667-8c01-e81783a368e2">
+          <input type="hidden" name="subject" value="Nouvelle demande — Cortesia">
+          <input type="checkbox" name="botcheck" class="hidden">
           <div class="grid sm:grid-cols-2 gap-6">
             <div>
               <label for="firstName" class="block text-sm text-background/80 mb-2">Prénom</label>
