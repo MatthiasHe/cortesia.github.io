@@ -315,7 +315,7 @@
 
     <div class="grid md:grid-cols-3 gap-8 lg:gap-12">
       <!-- Menu Category 1 -->
-      <div class="bg-background p-8 rounded">
+      <div class="bg-background p-8 rounded flex flex-col">
         <div class="aspect-[4/3] mb-8 overflow-hidden rounded">
           <img
             src="/assets/10.JPG"
@@ -341,7 +341,7 @@
       </div>
 
       <!-- Menu Category 2 -->
-      <div class="bg-background p-8 rounded">
+      <div class="bg-background p-8 rounded flex flex-col">
         <div class="aspect-[4/3] mb-8 overflow-hidden rounded">
           <img
             src="/assets/11.jpg"
@@ -365,7 +365,7 @@
       </div>
 
       <!-- Menu Category 3 -->
-      <div class="bg-background p-8 rounded">
+      <div class="bg-background p-8 rounded flex flex-col">
         <div class="aspect-[4/3] mb-8 overflow-hidden rounded">
           <img
             src="/assets/7.jpg"
@@ -439,34 +439,34 @@
 
     <div class="grid md:grid-cols-3 gap-8">
       <!-- Témoignage 1 -->
-      <div class="bg-background p-8 rounded">
-        <span class="font-serif text-6xl text-primary/20 leading-none">"</span>
-        <p class="text-muted-foreground leading-relaxed italic mt-2 mb-6">
-          Nous avons fait appel à Cortesia pour un buffet à la dernière minute et ils ont réussi à relever le défi. De la qualité tant dans les mets que le service, dressage et même décoration, merci à toute l’équipe !        </p>
-        <div class="border-t border-border pt-4">
-          <p class="font-medium text-foreground">Supergroup</p>
-        </div>
-      </div>
-
-      <!-- Témoignage 2 -->
-      <div class="bg-background p-8 rounded">
+      <div class="bg-background p-8 rounded flex flex-col">
         <span class="font-serif text-6xl text-primary/20 leading-none">"</span>
         <p class="text-muted-foreground leading-relaxed italic mt-2 mb-6">
           On a fait une collaboration avec Cortesia pour un buffet, et notre client comme nous étions ravis. Le décor était parfait pour la saison, avec des fleurs de saison et une nappe faite main… ça change des buffets habituels.
           Un grand merci !        </p>
-        <div class="border-t border-border pt-4">
+        <div class="border-t border-border pt-4 mt-auto">
           <p class="font-medium text-foreground">Appet'Italy</p>
         </div>
       </div>
 
+      <!-- Témoignage 2 -->
+      <div class="bg-background p-8 rounded flex flex-col">
+        <span class="font-serif text-6xl text-primary/20 leading-none">"</span>
+        <p class="text-muted-foreground leading-relaxed italic mt-2 mb-6">
+          Nous avons fait appel à Cortesia pour un buffet à la dernière minute et ils ont réussi à relever le défi. De la qualité tant dans les mets que le service, dressage et même décoration, merci à toute l’équipe !        </p>
+        <div class="border-t border-border pt-4 mt-auto">
+          <p class="font-medium text-foreground">Supergroup</p>
+        </div>
+      </div>
+
       <!-- Témoignage 3 -->
-      <div class="bg-background p-8 rounded">
+      <div class="bg-background p-8 rounded flex flex-col">
         <span class="font-serif text-6xl text-primary/20 leading-none">"</span>
         <p class="text-muted-foreground leading-relaxed italic mt-2 mb-6">
           Cortesia a été une très belle découverte !
           Nous avons commandé un buffet pour 20 personnes. Le menu varié a permis à tous d’en profiter, avec des plats végétariens et végans, ainsi que des produits de saison.
           Merci !        </p>
-        <div class="border-t border-border pt-4">
+        <div class="border-t border-border pt-4 mt-auto">
           <p class="font-medium text-foreground">La maison du barman</p>
         </div>
       </div>
@@ -547,10 +547,18 @@
       </div>
 
       <div class="bg-background/5 p-8 sm:p-12 rounded">
+        @if (isSubmitted()) {
+          <h3 class="font-serif text-2xl font-medium text-background mb-4">
+            Demande de contact envoyée
+          </h3>
+          <p class="text-background/80">
+            Merci pour votre message. Nous revenons vers vous très vite.
+          </p>
+        } @else {
         <h3 class="font-serif text-2xl font-medium text-background mb-8">
           Demande de devis
         </h3>
-        <form action="https://api.web3forms.com/submit" method="POST" class="space-y-6">
+        <form (submit)="onSubmit($event)" class="space-y-6">
           <input type="hidden" name="access_key" value="9e5b73fa-6f11-4667-8c01-e81783a368e2">
           <input type="hidden" name="subject" value="Nouvelle demande — Cortesia">
           <input type="checkbox" name="botcheck" class="hidden">
@@ -637,13 +645,19 @@
             ></textarea>
           </div>
 
+          @if (submitError()) {
+            <p class="text-sm text-red-300">{{ submitError() }}</p>
+          }
+
           <button
             type="submit"
-            class="w-full bg-primary text-white px-8 py-4 text-sm tracking-[0.15em] uppercase hover:bg-primary/90 transition-colors rounded font-medium"
+            [disabled]="isSubmitting()"
+            class="w-full bg-primary text-white px-8 py-4 text-sm tracking-[0.15em] uppercase hover:bg-primary/90 transition-colors rounded font-medium disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            Envoyer ma demande
+            {{ isSubmitting() ? 'Envoi…' : 'Envoyer ma demande' }}
           </button>
         </form>
+        }
       </div>
     </div>
   </div>
